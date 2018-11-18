@@ -16,6 +16,7 @@ var timeInPortals = 0;
 var gameField = new Array(String);
 var foodCount = 0;
 var BestScore = 0;
+var windowHeight = screen.height;
 
 //Global
 
@@ -34,6 +35,7 @@ var PortalTimeKey = setInterval(() => {
 PortalEvent()
 }, 12000);
 TimeScore();
+StabilizeWindow();
 
 
 //Methods-main
@@ -71,6 +73,7 @@ function NewGame(loseWindow)
     SnakeTimeKey = setInterval(MovSnake,snakeSpeed);
     PortalTimeKey = setInterval(() => { PortalEvent() }, 12000);
     TimeScore();
+    StabilizeWindow();
 }
 
 function FirstInitial()
@@ -94,7 +97,15 @@ function FirstInitial()
     gameField[CurrentLoc[0]][CurrentLoc[1]-2] = "snake";
 }
 
-
+function StabilizeWindow()
+{
+    if (windowHeight < 1080)
+    {
+        var area = document.getElementById('field');
+        area.style.transform = 'scale(0.85,0.85)';
+        area.style.marginTop = '-30px';
+    }
+}
 
 function CreateLoseWindow()
 {
