@@ -1,0 +1,202 @@
+.main
+{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    /*background: #999999;*/
+    background: radial-gradient(#00FF66, #003300);
+    padding-top: 10px;
+}
+
+.maingame
+{
+    overflow: hidden;
+}
+
+.field
+{
+    padding: 4px;
+    border: 3px solid black;
+    margin: 20px auto 0 auto;
+    background: #009933;
+    width: 624px;
+    height: 624px;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 20px;
+}
+@keyframes  portalwheel {
+    from {
+        transform: rotate(360deg);
+    }
+    to { 
+        transform: rotate(0deg);
+    }  
+}
+
+.portal
+{
+    animation: portalwheel 2s  infinite linear;
+}
+
+.cell
+{
+    border-radius: 6px;
+    margin: 0px 0px 0px 0px;
+    background: #009933;
+    width: 24px;
+    height: 24px;
+}
+
+body
+{
+    margin: 0;
+}
+
+
+/*----------------------------------SCORE--------------------------------*/
+
+.infopanel
+{
+    background: #FFFFCC;
+    height: 100px;
+    width: 750px;
+    margin: 0 auto 20px auto;
+    border-radius: 25px;
+    font-family: "Comic Sans MS",Arial, Helvetica, sans-serif;
+    font-size: 30px;
+    line-height: 90px;
+    padding: 0 0 0 20px;
+    text-align: center;
+}
+
+.lableTime
+{
+    margin: auto;
+    display: inline-block;
+}
+
+.time
+{
+    width: 40px;
+    display: inline-block;
+    margin-right: 30px;
+}
+
+.lableScore
+{
+    display: inline-block;
+}
+
+.score
+{
+    width: 40px;
+    display: inline-block;
+    margin-right: 30px;
+}
+
+.labelBestScore
+{
+    display: inline-block;
+}
+
+
+
+
+/* ------------------TOTAL------------------*/
+
+@keyframes statistic {
+    from {
+      width: 0px; 
+      border-radius: 0px;
+      background: rgba(59, 243, 142, 0);
+      color: rgba(0, 0, 0, 0);
+    }
+    60% { color: rgba(0, 0, 0, 0); }
+    to { 
+      border-radius: 50px;
+      width: 600px;
+      background: rgba(59, 243, 142, 0.75);
+      color: rgba(0, 0, 0, 1);
+    }  
+}
+
+@keyframes button {
+    from{
+        background-color: rgba(203, 236, 186, 0);
+        color: rgba(0, 0, 0, 0);
+    }
+    60% { 
+        background-color: rgba(203, 236, 186, 0); 
+        color: rgba(0, 0, 0, 0);
+    }
+    to {
+        background-color: rgba(203, 236, 186, 1);
+        color: rgba(0, 0, 0, 1);
+    }
+}
+
+.statistic
+{
+    visibility: visible;
+    animation: statistic 1.5s ease;
+    width: 600px;
+    height: 300px;
+    border-radius: 50px;
+    background: rgba(59, 243, 142, .75);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    text-align: center;
+    font-family: "Comic Sans MS",Arial, Helvetica, sans-serif;
+    
+    
+}
+
+.lose
+{   
+    font-size: 40px;
+    letter-spacing: 10px;
+    margin-top: 5%;
+}
+
+.label_total
+{
+    display: inline-block;
+    font-size: 35px;
+    margin-top: 4%;
+    margin-right: 2%;
+}
+
+.total
+{
+    font-size: 30px;
+    display: inline-block;
+}
+
+input {
+    outline: none !important;
+  }
+
+.tryAgain:hover
+{
+    box-shadow: 0 0 20px rgb(0, 0, 0);
+}
+
+.tryAgain
+{
+    animation: button 3s ease;
+    display: block;
+    margin: 6% auto auto auto;
+    font-family: "Comic Sans MS",Arial, Helvetica, sans-serif;
+    background-color: rgb(203, 236, 186);
+    height: 75px;
+    width: 175px;
+    cursor: pointer;
+    font-size: 30px;
+    border: none;
+    border-radius: 30px;
+}
