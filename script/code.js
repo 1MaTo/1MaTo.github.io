@@ -109,9 +109,8 @@ function StabilizeWindow()
     }
     else if (isMobile)
     {
-        area.style.margin = '200px auto 0 auto';
-        area.style.transform = 'scale(1.45,1.45)';
-        document.getElementById(mobKeys).style.visibility = 'visible';
+        area.style.margin = '100px auto 0 auto';
+        area.style.transform = 'scale(1.2,1.2)';
     }
 }
 
