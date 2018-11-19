@@ -207,10 +207,10 @@ input {
 
 .mobilekeys
 {
-    
+    visibility: hidden;
     margin: 100px auto auto auto;
-    width: 600px;
-    height: 600px;
+    width: 450px;
+    height: 450px;
     justify-content: center;
     align-items: center;
     display: flex;

@@ -107,8 +107,10 @@ function StabilizeWindow()
         area.style.transform = 'scale(0.85,0.85)';
         area.style.marginTop = '-30px';
     }
-    else if (isMobile)
+    if (isMobile)
     {
+        var mobVer = document.getElementById('mobKeys');
+        mobVer.style.visibility = 'visible';
         area.style.margin = '100px auto 0 auto';
         area.style.transform = 'scale(1.2,1.2)';
     }
