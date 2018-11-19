@@ -207,7 +207,7 @@ input {
 
 .mobilekeys
 {
-    visibility: hidden;
+    
     margin: auto;
     width: 600px;
     height: 600px;
@@ -224,7 +224,7 @@ input {
     width: 200px;
     height: 200px;
     background: rgba(0, 0, 0, 0);
-    
+    border: none;
 }
 
 #up
