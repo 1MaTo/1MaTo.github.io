@@ -11,6 +11,8 @@
 .maingame
 {
     overflow: hidden;
+    height: 100%;
+    width: 100%;
 }
 
 .field
@@ -198,4 +200,45 @@ input {
     font-size: 30px;
     border: none;
     border-radius: 30px;
+}
+
+
+/*-----------------------MOBILE CONTROLS-----------------------*/
+
+.mobilekeys
+{
+    visibility: hidden;
+    margin: auto;
+    width: 600px;
+    height: 600px;
+    margin-top: 13em;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    background: url(../sprites/mobileControls.svg);
+}
+
+.key
+{
+    width: 200px;
+    height: 200px;
+    background: rgba(0, 0, 0, 0);
+    
+}
+
+#up
+{
+    margin-bottom: 100px;
+}
+#down
+{
+    margin-top: 100px;
+}
+
+.groupedkey
+{
+    
+    display: flex;
+    flex-direction: column;
 }

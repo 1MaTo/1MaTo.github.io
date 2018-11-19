@@ -99,11 +99,19 @@ function FirstInitial()
 
 function StabilizeWindow()
 {
-    if (windowHeight < 1080)
+    var area = document.getElementById('field');
+    var isLowHeight = windowHeight < 1080;
+    var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent);
+    if (isLowHeight && !isMobile)
     {
-        var area = document.getElementById('field');
         area.style.transform = 'scale(0.85,0.85)';
         area.style.marginTop = '-30px';
+    }
+    else if (isMobile)
+    {
+        area.style.margin = '200px auto 0 auto';
+        area.style.transform = 'scale(1.45,1.45)';
+        document.getElementById(mobKeys).style.visibility = 'visible';
     }
 }
 
@@ -221,8 +229,10 @@ function CreateFood()
     //cellsArr[foodLoc[0]][foodLoc[1]].style.background = foodColor;
 }
 
-function Controls(e)
-{
+function Controls(e,direct)
+{ 
+    if (direct != "undefined") e.keyCode = direct;
+    
     switch(e.keyCode)
     {
         case 37:  // если нажата клавиша влево

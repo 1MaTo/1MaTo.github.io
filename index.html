@@ -23,6 +23,14 @@
                     <input id="tryAgainButton" class="tryAgain" type="button" onclick="start()" value="Try again"></input>
                 </div> -->
                 <div class="field" id="field"></div>
+                <div class="mobilekeys" id="mobKeys">
+                    <input id="left" class="key" type="button" onclick="Controls(KeyboardEvent,37)" value=""></input>
+                    <div class="groupedkey">
+                        <input id="up" class="key" type="button" onclick="Controls(KeyboardEvent,38)" value=""></input>
+                        <input id="down" class="key" type="button" onclick="Controls(KeyboardEvent,40)" value=""></input>
+                    </div>
+                    <input id="right" class="key" type="button" onclick="Controls(KeyboardEvent,39)" value=""></input>
+                </div>
             </div>
         </div>
     </body>
