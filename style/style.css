@@ -241,3 +241,26 @@ input {
     display: flex;
     flex-direction: column;
 }
+
+#right:hover
+{
+    background: url("../sprites/onClick.svg");
+}
+
+#down:hover
+{
+    transform: rotate(90deg);
+    background: url("../sprites/onClick.svg");
+}
+
+#left:hover
+{
+    transform: rotate(180deg);
+    background: url("../sprites/onClick.svg");
+}
+
+#up:hover
+{
+    transform: rotate(-90deg);
+    background: url("../sprites/onClick.svg");
+}
