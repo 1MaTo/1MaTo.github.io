@@ -242,24 +242,24 @@ input {
     flex-direction: column;
 }
 
-#right:hover
+#right:active
 {
     background: url("../sprites/onClick.svg");
 }
 
-#down:hover
+#down:active
 {
     transform: rotate(90deg);
     background: url("../sprites/onClick.svg");
 }
 
-#left:hover
+#left:active
 {
     transform: rotate(180deg);
     background: url("../sprites/onClick.svg");
 }
 
-#up:hover
+#up:active
 {
     transform: rotate(-90deg);
     background: url("../sprites/onClick.svg");
