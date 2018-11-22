@@ -17,12 +17,14 @@ var gameField = new Array(String);
 var foodCount = 0;
 var BestScore = 0;
 var windowHeight = screen.height;
+var gamePhase = 'start';
+var pastKey = 0;
 
 //Global
 
 var Time = document.getElementById('time');
 var Score = document.getElementById('score');
-addEventListener("keydown", Controls);
+document.addEventListener("keyup", Controls);
 var cellsArr = new Array(HTMLDivElement);
 var CurrentLoc = [GetRandom(4,9),GetRandom(4,9)];
 var tail = [[CurrentLoc[0],CurrentLoc[1],],[CurrentLoc[0],CurrentLoc[1]-1],[CurrentLoc[0],CurrentLoc[1]-2]];
@@ -204,7 +206,7 @@ function SelectCurrent()
 function TotalScore()
 {
     clearInterval(TimerKey);
-    return Math.round((foodCount / ingameTime) * 100 + (10 * timeInPortals)/ingameTime*0.5);
+    return Math.round((foodCount)*1.5 + (10 * timeInPortals)/ingameTime*0.5);
 }
 
 function TimeScore()
@@ -233,7 +235,6 @@ function CreateFood()
 function Controls(e,direct)
 { 
     if (direct != "undefined") e.keyCode = direct;
-    
     switch(e.keyCode)
     {
         case 37:  // если нажата клавиша влево
@@ -261,9 +262,15 @@ function Controls(e,direct)
             }
             break;
         case 27:
-            GameEnd();
+            if (e.keyCode != pastKey)
+            {
+                setTimeout(() => {pastKey = 0;},500);
+                StartAndPause()
+                console.log(e.keyCode);
+            }
+            pastKey = e.keyCode;
             break;
-    }
+    }    
 }
 
 function MovSnake()
@@ -320,6 +327,34 @@ function MovSnake()
 function GetRandom(min,max)
 {
     return Math.round(Math.random() * (max - min) + min);
+}
+
+function StartAndPause()
+{
+    var pauseWind = document.getElementById("pauseWindow");
+    var pauseBut = document.getElementById("pause");
+    if (gamePhase == 'start')
+    {  
+        pauseWind.style.animation = 'animation: blink 2s infinite';
+        pauseWind.style.visibility = 'visible';
+        clearInterval(SnakeTimeKey);
+        clearInterval(PortalTimeKey);
+        clearInterval(TimerKey);
+        gamePhase = 'pause';
+        pauseBut.value = "play";
+        pauseBut.style.backgroundColor = "rgba(255,255,255,0.2)";
+    }
+    else
+    {
+        pauseWind.style.animation = 'none';
+        pauseWind.style.visibility = 'hidden';
+        SnakeTimeKey = setInterval(MovSnake,snakeSpeed);
+        PortalTimeKey = setInterval(() => { PortalEvent() }, 12000);
+        TimerKey = setTimeout(function() { TimeScore(); },1000);
+        gamePhase = 'start';
+        pauseBut.value = "pause";
+        pauseBut.style.backgroundColor = "none";
+    }
 }
 
 //Actions
@@ -398,7 +433,7 @@ function PortalEvent()
 {
     if (GetRandom(1,100) < 50 && !isPortalActive)
     {    
-        PortalAction();
+        PortalAction()
         setTimeout(function() {
             DeletePortal();
         },10000);
