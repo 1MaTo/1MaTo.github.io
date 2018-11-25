@@ -24,7 +24,8 @@ var pastKey = 0;
 
 var Time = document.getElementById('time');
 var Score = document.getElementById('score');
-document.addEventListener("keyup", Controls);
+document.addEventListener("keydown", Controls);
+document.addEventListener("keydown", MakePause);
 var cellsArr = new Array(HTMLDivElement);
 var CurrentLoc = [GetRandom(4,9),GetRandom(4,9)];
 var tail = [[CurrentLoc[0],CurrentLoc[1],],[CurrentLoc[0],CurrentLoc[1]-1],[CurrentLoc[0],CurrentLoc[1]-2]];
@@ -199,8 +200,10 @@ function SelectCurrent()
     }
     tail[0][0] = CurrentLoc[0];
     tail[0][1] = CurrentLoc[1];
+    RenderField(Array(LastLoc));
     LastLoc[0] = tail[tail.length - 1][0];
     LastLoc[1] = tail[tail.length - 1][1];
+    RenderField(tail);
 }
 
 function TotalScore()
@@ -229,48 +232,50 @@ function CreateFood()
         foodLoc = [GetRandom(1,cellsCount),GetRandom(1,cellsCount)];
     }
     gameField[foodLoc[0]][foodLoc[1]] = "food";
+    RenderField(Array(Array(foodLoc[0],foodLoc[1])));
     //cellsArr[foodLoc[0]][foodLoc[1]].style.background = foodColor;
 }
 
-function Controls(e,direct)
-{ 
-    if (direct != "undefined") e.keyCode = direct;
-    switch(e.keyCode)
-    {
-        case 37:  // если нажата клавиша влево
-            if (direction[0] != "left" & direction[0] != "right")
-            {
-                direction[1] = "left";
-            }
-            break;
-        case 38:   // если нажата клавиша вверх
-            if (direction[0] != "up" & direction[0] != "down")
-            {
-                direction[1] = "up";
-            }
-            break;
-        case 39:   // если нажата клавиша вправо
-            if (direction[0] != "right" & direction[0] != "left")
-            {
-                direction[1] = "right";
-            }
-            break;
-        case 40:   // если нажата клавиша вниз
-            if (direction[0] != "up" & direction[0] != "down")
-            {
-                direction[1] = "down";
-            }
-            break;
+function Controls(e, direct) {
+
+    if (gamePhase != 'pause') {
+        if (direct != "undefined") e.keyCode = direct;
+        switch (e.keyCode) {
+            case 37:  // если нажата клавиша влево
+                if (direction[0] != "left" & direction[0] != "right") {
+                    direction[1] = "left";
+                }
+                break;
+            case 38:   // если нажата клавиша вверх
+                if (direction[0] != "up" & direction[0] != "down") {
+                    direction[1] = "up";
+                }
+                break;
+            case 39:   // если нажата клавиша вправо
+                if (direction[0] != "right" & direction[0] != "left") {
+                    direction[1] = "right";
+                }
+                break;
+            case 40:   // если нажата клавиша вниз
+                if (direction[0] != "up" & direction[0] != "down") {
+                    direction[1] = "down";
+                }
+                break;
+        }
+    }
+}
+
+function MakePause(e) {
+    switch (e.keyCode) {
         case 27:
-            if (e.keyCode != pastKey)
-            {
-                setTimeout(() => {pastKey = 0;},500);
+            if (e.keyCode != pastKey) {
+                setTimeout(() => { pastKey = 0; }, 500);
                 StartAndPause()
                 console.log(e.keyCode);
             }
             pastKey = e.keyCode;
             break;
-    }    
+    }
 }
 
 function MovSnake()
@@ -321,7 +326,6 @@ function MovSnake()
     direction[0] = direction[1];
     SelectCurrent();
     if (tailsLeft > 0) tailsLeft--;
-    RenderField();
 }
 
 function GetRandom(min,max)
@@ -368,6 +372,7 @@ function CreatePortal()
     }
     //cellsArr[portalLoc[0]][portalLoc[1]].style.background = portalColor;
     gameField[portalLoc[0]][portalLoc[1]] = "portal";
+    RenderField(Array(Array(portalLoc[0],portalLoc[1])));
     return portalLoc;
 }
 
@@ -440,31 +445,57 @@ function PortalEvent()
     }
 }
 
-function RenderField()
-{
-    for (i = 1; i <= cellsCount; i++)
-    {
-        for (j = 1; j <= cellsCount; j++)
-        {
-            switch(gameField[i][j])
-            {
-                case "empty": 
+function RenderField(mass) {
+    
+    var i = 0;
+    var j = 0;
+
+    if (mass = 'undefined') {
+        for (i = 1; i <= cellsCount; i++) {
+            for (j = 1; j <= cellsCount; j++) {
+                switch (gameField[i][j]) {
+                    case "empty":
+                        cellsArr[i][j].style.background = fieldColor;
+                        break;
+
+                    case "snake":
+                        cellsArr[i][j].style.background = snakeBodyColor;
+                        break;
+
+                    case "food":
+                        cellsArr[i][j].style.background = foodColor;
+                        break;
+
+                    case "portal":
+                        cellsArr[i][j].classList.add('portal');
+                        cellsArr[i][j].style.background = portalColor;
+                        break;
+                }
+            }
+        }
+    }
+    else {
+        for (var k = 0; k < mass.length; k++) {
+            i = mass[k][0];
+            j = mass[k][1];
+            switch (gameField[i][j]) {
+                case "empty":
                     cellsArr[i][j].style.background = fieldColor;
                     break;
 
-                case "snake": 
+                case "snake":
                     cellsArr[i][j].style.background = snakeBodyColor;
-                    break; 
+                    break;
 
                 case "food":
                     cellsArr[i][j].style.background = foodColor;
-                    break;    
-                
-                case "portal": 
+                    break;
+
+                case "portal":
                     cellsArr[i][j].classList.add('portal');
                     cellsArr[i][j].style.background = portalColor;
                     break;
             }
         }
     }
-}
+}       
