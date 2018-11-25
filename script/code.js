@@ -265,7 +265,8 @@ function Controls(e, direct) {
     }
 }
 
-function MakePause(e) {
+function MakePause(e, direct) {
+    if (direct != "undefined") e.keyCode = direct;
     switch (e.keyCode) {
         case 27:
             if (e.keyCode != pastKey) {
