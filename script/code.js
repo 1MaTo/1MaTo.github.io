@@ -21,7 +21,7 @@ var gamePhase = 'start';
 var pastKey = 0;
 
 //Global
-
+var stopFlag = false;
 var Time = document.getElementById('time');
 var Score = document.getElementById('score');
 document.addEventListener("keydown", Controls);
@@ -33,7 +33,8 @@ var LastLoc = [tail[2][0],tail[2][1]];
 FirstInitial();
 CreateFood();
 var TimerKey = 0;
-var SnakeTimeKey = setInterval(MovSnake,snakeSpeed);
+var SnakeTimeKey = 0;
+StartSnakeMov();
 var PortalTimeKey = setInterval(() => {
 PortalEvent()
 }, 12000);
@@ -73,10 +74,26 @@ function NewGame(loseWindow)
     gameField[CurrentLoc[0]][CurrentLoc[1]-2] = "snake";
 
     CreateFood();
-    SnakeTimeKey = setInterval(MovSnake,snakeSpeed);
+    //SnakeTimeKey = setInterval(MovSnake,snakeSpeed);
+    StartSnakeMov();
     PortalTimeKey = setInterval(() => { PortalEvent() }, 12000);
     TimeScore();
     StabilizeWindow();
+}
+
+function StartSnakeMov()
+{
+    MovSnake();
+    if (!stopFlag)
+    {
+        SnakeTimeKey = setTimeout(StartSnakeMov, snakeSpeed);
+    }
+}
+function StopSnakeMov()
+{   
+    stopFlag = true;
+    clearTimeout(SnakeTimeKey);
+    setTimeout(() => {stopFlag = false}, 500);
 }
 
 function FirstInitial()
@@ -155,7 +172,8 @@ function CreateLoseWindow()
 
 function GameEnd()
 {
-    clearInterval(SnakeTimeKey);
+    //clearInterval(SnakeTimeKey);
+    StopSnakeMov();
     clearInterval(PortalTimeKey);
     CreateLoseWindow();
 }
@@ -168,11 +186,11 @@ function SelectCurrent()
         tail.push([tail[tail.length-1][0],tail[tail.length-1][1]]);
         tailsLeft++;
         CreateFood();
-        if (snakeSpeed > 100)
+        if (snakeSpeed > 50)
         {
             snakeSpeed -= 25;
-            clearInterval(SnakeTimeKey);
-            SnakeTimeKey = setInterval(MovSnake,snakeSpeed);
+            //clearInterval(SnakeTimeKey);
+            //SnakeTimeKey = setInterval(MovSnake,snakeSpeed);
         }
     }
     else
@@ -204,6 +222,12 @@ function SelectCurrent()
     LastLoc[0] = tail[tail.length - 1][0];
     LastLoc[1] = tail[tail.length - 1][1];
     RenderField(tail);
+}
+
+function ChangeSpeed()
+{
+    StopSnakeMov();
+    StartSnakeMov();
 }
 
 function TotalScore()
@@ -342,7 +366,8 @@ function StartAndPause()
     {  
         pauseWind.style.animation = 'animation: blink 2s infinite';
         pauseWind.style.visibility = 'visible';
-        clearInterval(SnakeTimeKey);
+        //clearInterval(SnakeTimeKey);
+        StopSnakeMov();
         clearInterval(PortalTimeKey);
         clearInterval(TimerKey);
         gamePhase = 'pause';
@@ -353,7 +378,8 @@ function StartAndPause()
     {
         pauseWind.style.animation = 'none';
         pauseWind.style.visibility = 'hidden';
-        SnakeTimeKey = setInterval(MovSnake,snakeSpeed);
+        //SnakeTimeKey = setInterval(MovSnake,snakeSpeed);
+        StartSnakeMov();
         PortalTimeKey = setInterval(() => { PortalEvent() }, 12000);
         TimerKey = setTimeout(function() { TimeScore(); },1000);
         gamePhase = 'start';
